@@ -1,0 +1,840 @@
+/* ==========================================================================
+   1. DESIGN SYSTEM & ROOT VARIABLES (RED & BLACK THEME)
+   ========================================================================== */
+:root {
+  --bg: #08080a;                  /* Pitch black background */
+  --panel: #111115;               /* Obsidian panel */
+  --panel2: #1a171d;              /* Elevated charcoal panel */
+  --line: #2b1a20;                /* Deep crimson-tinted border */
+  --text: #fcfcfd;                /* Crisp white text */
+  --muted: #9e959b;               /* Subtle cool gray text */
+  --red: #ff334b;                 /* Primary vivid crimson/red accent */
+  --red-dark: #f60226;            /* Deep ruby red */
+  --amber: #ff9238;               /* Warm flame highlight */
+  --cyan: #ff334b;                /* Alias so existing code keeps working */
+  --shadow: 0 20px 70px #000000cc;
+}
+
+/* ==========================================================================
+   2. BASE & RESET
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at 80% -10%, #380d16 0, #08080a 40%), var(--bg);
+  color: var(--text);
+  font: 14px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
+.app {
+  min-height: 100vh;
+}
+
+/* ==========================================================================
+   3. NAVIGATION & USER MENU
+   ========================================================================== */
+.nav {
+  height: 68px;
+  border-bottom: 1px solid var(--line);
+  background: #08080aee;
+  backdrop-filter: blur(16px);
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  gap: 28px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.brand {
+  font-weight: 800;
+  letter-spacing: 2px;
+  font-size: 17px;
+}
+
+.brand b {
+  color: var(--red);
+}
+
+.brand small {
+  display: block;
+  color: var(--muted);
+  font-size: 8px;
+  letter-spacing: 3px;
+  margin-top: -2px;
+}
+
+.tabs {
+  display: flex;
+  gap: 5px;
+  flex: 1;
+}
+
+.tabs button,
+.navuser {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  padding: 10px 13px;
+  border-radius: 8px;
+}
+
+.tabs button.active,
+.tabs button:hover {
+  background: var(--panel2);
+  color: var(--text);
+}
+
+.navuser {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--red), var(--red-dark));
+  color: #ffffff;
+  font-weight: 800;
+  box-shadow: 0 0 14px #ff334b44;
+}
+
+.menu {
+  position: absolute;
+  right: 25px;
+  top: 60px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 7px;
+  box-shadow: var(--shadow);
+  display: none;
+  min-width: 180px;
+}
+
+.menu.open {
+  display: block;
+}
+
+.menu button {
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  padding: 10px;
+  border-radius: 7px;
+}
+
+.menu button:hover {
+  background: var(--panel2);
+}
+
+.danger {
+  color: var(--red) !important;
+}
+
+/* ==========================================================================
+   4. LAYOUT & HERO SECTION
+   ========================================================================== */
+.wrap {
+  max-width: 1200px;
+  margin: auto;
+  padding: 30px 24px 70px;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 22px;
+  align-items: stretch;
+}
+
+.heroCard {
+  padding: 34px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: linear-gradient(145deg, #131116, #0a090c);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  position: relative;
+}
+
+.heroCard::after {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border: 1px solid #ff334b33;
+  border-radius: 50%;
+  right: -100px;
+  top: -90px;
+  box-shadow: 
+    0 0 0 45px #ff334b08,
+    0 0 0 90px #ff334b04;
+}
+
+.eyebrow {
+  color: var(--red);
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: 11px;
+}
+
+.hero h1 {
+  font-size: 42px;
+  line-height: 1.02;
+  margin: 12px 0;
+}
+
+.hero p {
+  color: var(--muted);
+  max-width: 680px;
+  line-height: 1.7;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.stat {
+  background: #ffffff06;
+  border: 1px solid var(--line);
+  padding: 13px;
+  border-radius: 11px;
+}
+
+.stat b {
+  font-size: 20px;
+}
+
+.stat span {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 3px;
+}
+
+/* ==========================================================================
+   5. RADAR ANIMATION (RED GLOW)
+   ========================================================================== */
+.radar {
+  min-height: 270px;
+  display: grid;
+  place-items: center;
+}
+
+.radarRing {
+  width: 210px;
+  height: 210px;
+  border: 1px solid #ff334b55;
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 
+    0 0 0 35px #ff334b08,
+    0 0 0 70px #ff334b04;
+}
+
+.radarRing::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 48%;
+  height: 1px;
+  background: var(--red);
+  box-shadow: 0 0 8px var(--red);
+  transform-origin: left;
+  animation: sweep 4s linear infinite;
+}
+
+.dot {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 14px var(--red);
+}
+
+.d1 { left: 28%; top: 30%; }
+.d2 { right: 23%; top: 55%; }
+.d3 { left: 53%; bottom: 17%; }
+
+@keyframes sweep {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==========================================================================
+   6. PANELS, FORMS & BUTTONS
+   ========================================================================== */
+.panel {
+  background: linear-gradient(145deg, #131116, #0a090c);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 12px 45px #00000066;
+}
+
+.panelTitle {
+  font-size: 17px;
+  font-weight: 750;
+  margin-bottom: 16px;
+}
+
+.planner {
+  display: grid;
+  grid-template-columns: 1fr 55px 1fr 130px;
+  gap: 12px;
+  align-items: end;
+}
+
+.field label {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  margin-bottom: 6px;
+}
+
+.field select,
+.field input {
+  width: 100%;
+  background: #0b090d;
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 12px;
+  border-radius: 9px;
+  outline: 0;
+}
+
+.field select:focus,
+.field input:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 0 2px #ff334b22;
+}
+
+.swap {
+  height: 43px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--red);
+  border-radius: 9px;
+}
+
+.btn {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--text);
+  padding: 11px 15px;
+  border-radius: 9px;
+  font-weight: 650;
+  transition: 0.2s ease;
+}
+
+.primary {
+  background: linear-gradient(135deg, #ff2b44, #b01026);
+  border: 0;
+  color: #ffffff;
+  box-shadow: 0 4px 18px #ff334b33;
+}
+
+.ghost {
+  background: transparent;
+}
+
+.btn:hover {
+  filter: brightness(1.15);
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filters .active,
+.filters .btn.active {
+  border-color: var(--red);
+  color: var(--red);
+  box-shadow: 0 0 10px #ff334b22;
+}
+
+/* ==========================================================================
+   7. FLIGHT CARDS & RESULTS GRID
+   ========================================================================== */
+.resultsGrid {
+  display: grid;
+  grid-template-columns: 1.5fr 0.8fr;
+  gap: 20px;
+}
+
+.flight {
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  padding: 16px;
+  margin: 10px 0;
+  background: #100e13;
+  transition: 0.2s;
+}
+
+.flight:hover {
+  transform: translateY(-2px);
+  border-color: #5c1c27;
+}
+
+.flight.selected {
+  border-color: var(--red);
+  box-shadow: 0 0 0 1px #ff334b44;
+}
+
+.flightTop,
+.flightMid,
+.flightBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.route {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 18px;
+}
+
+.arrow {
+  color: var(--red);
+}
+
+.price {
+  font-size: 21px;
+  font-weight: 800;
+  color: var(--amber);
+}
+
+.meta {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.badge {
+  font-size: 10px;
+  padding: 4px 7px;
+  border-radius: 999px;
+  background: #ff334b18;
+  color: var(--red);
+  border: 1px solid #ff334b44;
+}
+
+.badge.amber {
+  color: var(--amber);
+  background: #ff923814;
+  border-color: #ff923844;
+}
+
+.badge.red {
+  color: var(--red);
+  background: #ff334b18;
+  border-color: #ff334b44;
+}
+
+.flightBottom {
+  border-top: 1px solid var(--line);
+  margin-top: 13px;
+  padding-top: 12px;
+}
+
+/* ==========================================================================
+   8. RECOMMENDATION SCORE & MAP
+   ========================================================================== */
+.recommend {
+  position: sticky;
+  top: 90px;
+}
+
+.score {
+  font-size: 48px;
+  font-weight: 850;
+  line-height: 1;
+  color: var(--red);
+  text-shadow: 0 0 20px #ff334b33;
+}
+
+.meter {
+  height: 8px;
+  background: #ffffff0a;
+  border-radius: 99px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+.meter i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--red), var(--red-dark));
+  border-radius: 99px;
+}
+
+.reason {
+  display: flex;
+  justify-content: space-between;
+  padding: 9px 0;
+  border-bottom: 1px solid #ffffff08;
+  color: var(--muted);
+}
+
+.reason b {
+  color: var(--text);
+}
+
+.map {
+  height: 290px;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 50%, #290c13, #08080a 65%);
+  border-radius: 12px;
+  border: 1px solid var(--line);
+}
+
+.map svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ==========================================================================
+   9. COMPARISON TABLE & MINI CARDS
+   ========================================================================== */
+.compare {
+  overflow: auto;
+}
+
+.compare table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.compare th,
+.compare td {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+.compare th {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.compare .best {
+  color: var(--red);
+  font-weight: 700;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.mini {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #100e13;
+}
+
+.mini b {
+  font-size: 22px;
+}
+
+.mini span {
+  display: block;
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+/* ==========================================================================
+   10. CHAT, DESTINATIONS, PROFILE & ANALYTICS
+   ========================================================================== */
+.chat {
+  height: 300px;
+  overflow: auto;
+  background: #0b090d;
+  border: 1px solid var(--line);
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.msg {
+  max-width: 85%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  margin: 7px 0;
+  line-height: 1.5;
+}
+
+.ai {
+  background: var(--panel2);
+}
+
+.me {
+  background: #3d1118;
+  margin-left: auto;
+}
+
+.chatbar {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.chatbar input {
+  flex: 1;
+}
+
+.dest {
+  height: 145px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #260c13, #0f0c11);
+  padding: 17px;
+}
+
+.dest h3 {
+  margin: 0 0 6px;
+}
+
+.dest p {
+  color: #cfbcc2;
+  margin: 0;
+}
+
+.dest button {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+}
+
+.historyItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--line);
+  padding: 13px 0;
+}
+
+.profile {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.profile .wide {
+  grid-column: 1 / -1;
+}
+
+.analytics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.bar {
+  height: 130px;
+  display: flex;
+  align-items: end;
+  gap: 8px;
+  border-bottom: 1px solid var(--line);
+  padding: 8px;
+}
+
+.bar i {
+  flex: 1;
+  background: linear-gradient(to top, var(--red-dark), var(--red));
+  border-radius: 5px 5px 0 0;
+  min-height: 10px;
+}
+
+/* ==========================================================================
+   11. NOTIFICATIONS, MODALS & AUTH
+   ========================================================================== */
+.notice {
+  padding: 11px 13px;
+  border-radius: 9px;
+  background: #ff334b14;
+  border: 1px solid #ff334b33;
+  color: #ffb8c2;
+  margin: 10px 0;
+}
+
+.empty {
+  text-align: center;
+  padding: 40px;
+  color: var(--muted);
+}
+
+.toast {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  background: #170f14;
+  border: 1px solid var(--red);
+  padding: 12px 16px;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  z-index: 50;
+}
+
+.auth {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: radial-gradient(circle, #2d0b13, #08080a 65%);
+}
+
+.authCard {
+  width: min(430px, 100%);
+  background: #110f13;
+  border: 1px solid var(--line);
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
+.authCard h1 {
+  margin: 8px 0;
+}
+
+.authCard form {
+  display: grid;
+  gap: 12px;
+}
+
+.authCard input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 9px;
+  border: 1px solid var(--line);
+  background: #0b090d;
+  color: var(--text);
+}
+
+.link {
+  border: 0;
+  background: transparent;
+  color: var(--red);
+}
+
+/* ==========================================================================
+   12. RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 900px) {
+  .hero,
+  .resultsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .recommend {
+    position: static;
+  }
+
+  .planner {
+    grid-template-columns: 1fr 50px 1fr;
+  }
+
+  .planner .searchBtn {
+    grid-column: 1 / -1;
+  }
+
+  .cards {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .analytics {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .nav {
+    padding: 0 12px;
+    gap: 8px;
+  }
+
+  .nav .tabs {
+    display: none;
+  }
+
+  .wrap {
+    padding: 18px 12px;
+  }
+
+  .hero h1 {
+    font-size: 34px;
+  }
+
+  .stats,
+  .cards,
+  .profile,
+  .analytics {
+    grid-template-columns: 1fr;
+  }
+
+  .planner {
+    grid-template-columns: 1fr;
+  }
+
+  .swap {
+    width: 100%;
+  }
+
+  .flightTop,
+  .flightMid,
+  .flightBottom {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .heroCard {
+    padding: 24px;
+  }
+}
